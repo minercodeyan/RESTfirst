@@ -1,13 +1,12 @@
 package com.example.restfirst.model;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Getter
@@ -15,7 +14,9 @@ import javax.persistence.MappedSuperclass;
 @ToString
 public class BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @JsonView({Views.IdName.class})
     private Long id;
 
 }
