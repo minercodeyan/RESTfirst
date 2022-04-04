@@ -7,6 +7,7 @@ import com.example.restfirst.service.ClientsService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -41,6 +42,7 @@ public class ClientController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> saveClient(@RequestBody @Valid Client client, BindingResult bindingResult) {
         System.out.println(client);
         if (bindingResult.hasErrors()) {
@@ -49,7 +51,7 @@ public class ClientController {
         }
         if (client == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-       // clientsService.saveClient(client);
+        clientsService.saveClient(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
