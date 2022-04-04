@@ -1,15 +1,13 @@
 package com.example.restfirst.model;
 
+import com.example.restfirst.model.JSONViews.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -20,7 +18,12 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Client extends BaseEntity {
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    @JsonView({Views.IdName.class})
+    private Long id;
     @Column(name = "name")
     @JsonView({Views.IdName.class})
     private String name;

@@ -2,7 +2,7 @@ package com.example.restfirst.controllerRest;
 
 
 import com.example.restfirst.model.Client;
-import com.example.restfirst.model.Views;
+import com.example.restfirst.model.JSONViews.Views;
 import com.example.restfirst.service.ClientsService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,11 +45,11 @@ public class ClientController {
         System.out.println(client);
         if (bindingResult.hasErrors()) {
             List<FieldError> errors =bindingResult.getFieldErrors();
-            return new ResponseEntity<>(errors,HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
         }
         if (client == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-      //  clientsService.saveClient(client);
+       // clientsService.saveClient(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
@@ -66,7 +65,7 @@ public class ClientController {
     @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Client> updateClient(Long id) {
         Optional<Client> client = clientsService.getById(id);
-        if (client == null)
+        if (client.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         clientsService.deleteClient(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
