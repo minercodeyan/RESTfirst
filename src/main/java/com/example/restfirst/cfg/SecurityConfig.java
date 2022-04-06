@@ -24,30 +24,34 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         // securedEnabled = true,jsr250Enabled = true,
         prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
   private final PasswordEncoder passwordEncoder;
+
   private final UserDetailsService userDetailsService;
+
   private final AuthEntryPointJwt unauthorizedHandler;
+
   @Autowired
   public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, AuthEntryPointJwt unauthorizedHandler){
     this.passwordEncoder = passwordEncoder;
     this.userDetailsService = userDetailsService;
     this.unauthorizedHandler = unauthorizedHandler;
   }
+
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
     return new AuthTokenFilter();
   }
+
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
     authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
   }
+
   @Bean
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
-
 
   @Override
   public void configure(HttpSecurity httpSecurity) throws Exception {

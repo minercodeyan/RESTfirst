@@ -3,7 +3,6 @@ package com.example.restfirst.security;
 import com.example.restfirst.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,14 +19,19 @@ import java.util.stream.Collectors;
 @Setter
 public class SecurityUser implements UserDetails {
     private static final long serialVersionUID = 1L;
+
     @JsonProperty(value = "id")
     private Long id;
+
     @JsonProperty(value = "username")
     private String username;
+
     @JsonProperty(value = "email")
     private String email;
+
     @JsonIgnore
     private String password;
+
     private Collection<? extends GrantedAuthority> authorities;
     public SecurityUser(Long id, String username, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
@@ -37,6 +41,7 @@ public class SecurityUser implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
+
     public static SecurityUser build(User user) {
         List<GrantedAuthority> authorities = user.getRoleSet().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
@@ -48,11 +53,11 @@ public class SecurityUser implements UserDetails {
                 user.getPassword(),
                 authorities);
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
-
 
     @Override
     public boolean isAccountNonExpired() {

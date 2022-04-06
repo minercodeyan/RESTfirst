@@ -17,7 +17,6 @@ import java.io.IOException;
 
 
 public class AuthTokenFilter extends OncePerRequestFilter {
-
     private JwtUtils jwtUtils;
     private UserDetailsService userDetailsService;
 
@@ -33,7 +32,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7, headerAuth.length());
+            return headerAuth.substring(7);
         }
 
         return null;

@@ -9,8 +9,6 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-
-
     private final String jwtSecret="MySecretKey";
     private int jwtExpirationMs=86400000;
 

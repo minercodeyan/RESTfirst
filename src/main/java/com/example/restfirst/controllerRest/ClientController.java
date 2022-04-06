@@ -1,26 +1,24 @@
 package com.example.restfirst.controllerRest;
 
 
+import com.example.restfirst.dto.ClientForUpdateDto;
 import com.example.restfirst.model.Client;
 import com.example.restfirst.model.JSONViews.Views;
 import com.example.restfirst.service.ClientsService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/v1/clients")
 public class ClientController {
-
     private final ClientsService clientsService;
 
     @Autowired
@@ -29,8 +27,7 @@ public class ClientController {
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> getClient(@PathVariable("id") Long clientId, Model model) {
-        model.addAttribute("lol","ooo");
+    public ResponseEntity<Client> getClient(@PathVariable("id") Long clientId) {
         if (clientId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -42,7 +39,6 @@ public class ClientController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> saveClient(@RequestBody @Valid Client client, BindingResult bindingResult) {
         System.out.println(client);
         if (bindingResult.hasErrors()) {
@@ -55,21 +51,21 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> updateClient(@RequestBody @Valid Client client, UriComponentsBuilder uriComponentsBuilder) {
+    @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateClient(@PathVariable("id") Long id, @RequestBody ClientForUpdateDto clientForUpdateDto, UriComponentsBuilder uriComponentsBuilder) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        if (client == null)
+        if (id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        clientsService.saveClient(client);
-        return new ResponseEntity<>(client, httpHeaders, HttpStatus.OK);
+        clientsService.updateClient(id,clientForUpdateDto);
+        return new ResponseEntity<>("updated", HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> updateClient(Long id) {
-        Optional<Client> client = clientsService.getById(id);
-        if (client.isEmpty())
+    @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Client> deleteClient(@PathVariable("id") Long id) {
+        Client client = clientsService.getById(id).orElse(null);
+        if (client==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        clientsService.deleteClient(id);
+        clientsService.deleteClient(client);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -1,6 +1,7 @@
 package com.example.restfirst.service.impl;
 
 
+import com.example.restfirst.dto.ClientForUpdateDto;
 import com.example.restfirst.model.Client;
 import com.example.restfirst.repo.ClientsRepo;
 import com.example.restfirst.service.ClientsService;
@@ -12,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class ClientsServiceImpl implements ClientsService {
-
     private final ClientsRepo clientsRepo;
 
     @Autowired
@@ -30,12 +30,18 @@ public class ClientsServiceImpl implements ClientsService {
         clientsRepo.save(client);
     }
 
-
     @Override
-    public void deleteClient(Long id) {
-        clientsRepo.deleteById(id);
+    public void deleteClient(Client client) {
+        clientsRepo.delete(client);
     }
 
+    @Override
+    public void updateClient(Long id,ClientForUpdateDto clientForUpdateDto) {
+        Client client = clientsRepo.findById(id).orElseThrow();
+        client.setName(clientForUpdateDto.getName());
+        client.setSurname(clientForUpdateDto.getSurname());
+        clientsRepo.save(client);
+    }
     @Override
     public List<Client> getAllClients() {
        return clientsRepo.findAll();

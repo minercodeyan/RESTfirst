@@ -18,12 +18,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     @Column(name = "username")
     private String username;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "email")
     private String email;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
