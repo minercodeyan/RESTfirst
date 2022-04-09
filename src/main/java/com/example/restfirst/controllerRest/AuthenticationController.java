@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -37,4 +39,16 @@ public class AuthenticationController {
         return new ResponseEntity<>(signupRequest, HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/lol",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> lol(){
+        List<String> list = new ArrayList<>();
+        list.add("lol");
+        list.add("lfl");
+        list.add("kik");
+        List<List<String>> lists =new ArrayList<>();
+        lists.add(new ArrayList<String>(list));
+        lists.add(new ArrayList<String>(list));
+        lists.add(new ArrayList<String>(list));
+        return new ResponseEntity<>(lists,HttpStatus.OK);
+    }
 }

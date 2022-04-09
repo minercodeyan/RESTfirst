@@ -1,6 +1,5 @@
 package com.example.restfirst.controllerRest;
 
-
 import com.example.restfirst.dto.ClientForUpdateDto;
 import com.example.restfirst.model.Client;
 import com.example.restfirst.model.JSONViews.Views;
@@ -47,7 +46,7 @@ public class ClientController {
         }
         if (client == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        clientsService.saveClient(client);
+     //   clientsService.saveClient(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 

@@ -15,7 +15,6 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
 
         SecurityUser userPrincipal = (SecurityUser) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())

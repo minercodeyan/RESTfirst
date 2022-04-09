@@ -19,10 +19,11 @@ public class SignupRequest {
     @JsonProperty(value = "email")
     private String email;
 
-    @JsonProperty(value = "role")
-    private Set<String> role;
-
     @Size(min = 6, max = 40)
     @JsonProperty(value = "password")
     private String password;
+
+    @JsonProperty(value = "role")
+    private Set<String> role;
+
 }

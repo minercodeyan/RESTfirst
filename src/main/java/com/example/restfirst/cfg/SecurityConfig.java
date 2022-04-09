@@ -12,10 +12,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -62,21 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/v1/**").permitAll()
-            .antMatchers("/api/auth/**").permitAll().anyRequest().authenticated()
+            .antMatchers("/api/v1/**").permitAll().anyRequest().authenticated()
             .and().csrf().disable();
     httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-  }
-
-  @Bean
-  @Override
-  protected UserDetailsService userDetailsService() {
-    return new InMemoryUserDetailsManager(
-            User.builder()
-                    .username("user")
-                    .password(passwordEncoder.encode("admin"))
-                    .roles("ADMIN")
-                    .build()
-    );
   }
 }
