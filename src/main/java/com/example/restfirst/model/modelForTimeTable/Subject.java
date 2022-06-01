@@ -19,4 +19,7 @@ public class Subject {
 
     @Column(name = "subject_name")
     private String subjectName;
+
+    @Column(name = "type")
+    private String type;
 }

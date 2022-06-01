@@ -1,16 +1,19 @@
 package com.example.restfirst.service.impl;
 
 import com.example.restfirst.model.ERole;
+import com.example.restfirst.model.GroupUni;
 import com.example.restfirst.model.Role;
 import com.example.restfirst.model.User;
 import com.example.restfirst.payload.JwtResponse;
 import com.example.restfirst.payload.LoginRequest;
 import com.example.restfirst.payload.SignupRequest;
+import com.example.restfirst.repo.GroupRepo;
 import com.example.restfirst.repo.RoleRepo;
 import com.example.restfirst.repo.UserRepo;
 import com.example.restfirst.security.SecurityUser;
 import com.example.restfirst.security.jwt.JwtUtils;
 import com.example.restfirst.service.UserService;
+import org.apache.catalina.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -87,8 +91,11 @@ public class UserServiceImpl implements UserService {
         List<String> roles = securityUser.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+
+        Optional<User> user = userRepo.findByUsername(securityUser.getUsername());
+
         return new JwtResponse(jwt,securityUser.getId(),securityUser.getUsername(),
-                securityUser.getEmail(),roles);
+                securityUser.getEmail(),roles,user.get().getGroupUni().getGroupNumber());
     }
 
     @Override

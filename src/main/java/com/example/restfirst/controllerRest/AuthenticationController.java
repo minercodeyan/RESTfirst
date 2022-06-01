@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -45,10 +47,11 @@ public class AuthenticationController {
         list.add("lol");
         list.add("lfl");
         list.add("kik");
-        List<List<String>> lists =new ArrayList<>();
-        lists.add(new ArrayList<String>(list));
-        lists.add(new ArrayList<String>(list));
-        lists.add(new ArrayList<String>(list));
-        return new ResponseEntity<>(lists,HttpStatus.OK);
+        Map<Integer,List<String>> map = new HashMap<>();
+        map.put(1,new ArrayList<>(list));
+        map.put(2,new ArrayList<>(list));
+        map.put(3,new ArrayList<>(list));
+        map.put(4,new ArrayList<>(list));
+        return new ResponseEntity<>(map,HttpStatus.OK);
     }
 }

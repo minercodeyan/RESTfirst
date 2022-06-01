@@ -4,16 +4,16 @@ import com.example.restfirst.security.SecurityUser;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private final String jwtSecret="MySecretKey";
+    private String jwtSecret="MyComponent";
     private int jwtExpirationMs=86400000;
 
     public String generateJwtToken(Authentication authentication) {
-
         SecurityUser userPrincipal = (SecurityUser) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))

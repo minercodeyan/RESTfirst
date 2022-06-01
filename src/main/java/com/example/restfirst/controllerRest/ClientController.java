@@ -46,7 +46,7 @@ public class ClientController {
         }
         if (client == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-     //   clientsService.saveClient(client);
+        clientsService.saveClient(client);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 

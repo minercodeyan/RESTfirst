@@ -17,16 +17,10 @@ import java.io.IOException;
 
 
 public class AuthTokenFilter extends OncePerRequestFilter {
-    private JwtUtils jwtUtils;
-    private UserDetailsService userDetailsService;
-
-    public AuthTokenFilter(){}
-
     @Autowired
-    public AuthTokenFilter(JwtUtils jwtUtils, UserDetailsService userDetailsService) {
-        this.jwtUtils = jwtUtils;
-        this.userDetailsService = userDetailsService;
-    }
+    private JwtUtils jwtUtils;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 
     private String parseJwt(HttpServletRequest request) {
@@ -34,7 +28,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7);
         }
-
         return null;
     }
 
@@ -60,5 +53,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
 
 }

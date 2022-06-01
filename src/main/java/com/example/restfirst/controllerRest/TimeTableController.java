@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/timetable")
 public class TimeTableController {
@@ -26,16 +24,16 @@ public class TimeTableController {
         this.timeTableService = timeTableService;
     }
 
-
     @GetMapping( "{number}")
     public ResponseEntity<?> getGroupTimeTable(@PathVariable("number") Integer number){
         if(number == null)
+        {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         if(!groupService.isGroupPresent(number))
-            return new ResponseEntity<>("не найдена",HttpStatus.NOT_FOUND);
-        List<List<String>> response = timeTableService.getGroupTimeTable(number);
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(timeTableService.getGroupTimeTable(number),HttpStatus.OK);
     }
-
-
 }
