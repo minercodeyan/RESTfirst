@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void CreateNewUser(SignupRequest signupRequest) {
+    public void createNewUser(SignupRequest signupRequest) {
         User user = new User(signupRequest.getUsername(),passwordEncoder.encode(signupRequest.getPassword()),
                 signupRequest.getEmail());
         Set<String> strRoles = signupRequest.getRole();
@@ -86,16 +86,15 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
         List<String> roles = securityUser.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-
         Optional<User> user = userRepo.findByUsername(securityUser.getUsername());
-
-        return new JwtResponse(jwt,securityUser.getId(),securityUser.getUsername(),
-                securityUser.getEmail(),roles,user.get().getGroupUni().getGroupNumber());
+        return new JwtResponse(
+                jwt,securityUser.getId(),securityUser.getUsername(),
+                securityUser.getEmail(),roles,
+                user.get().getStudent() != null ? user.get().getStudent().getGroupUni().getGroupNumber() : 0);
     }
 
     @Override

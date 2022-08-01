@@ -32,9 +32,9 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
-            System.out.println(1);
+            System.out.println("level 1 ex");
         } catch (MalformedJwtException e) {
-            System.out.println(2);
+            System.out.println("");
         } catch (ExpiredJwtException e) {
             System.out.println(3);
         } catch (UnsupportedJwtException e) {

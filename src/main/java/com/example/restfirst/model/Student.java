@@ -17,12 +17,12 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "clients")
+@Table(name = "students")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Client {
+public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -47,4 +47,8 @@ public class Client {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @JsonProperty(value = "dateOfBirth")
     private Date dateOfBirth;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id")
+    private GroupUni groupUni;
 }

@@ -6,7 +6,7 @@ import com.example.restfirst.payload.SignupRequest;
 
 public interface UserService {
 
-    void CreateNewUser(SignupRequest signupRequest);
+    void createNewUser(SignupRequest signupRequest);
 
     Boolean isUsernameFound(String username);
 

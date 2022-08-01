@@ -10,10 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -37,21 +33,8 @@ public class AuthenticationController {
             return new ResponseEntity<>("Ошибка: такой логин уже есть", HttpStatus.BAD_REQUEST);
         if (userService.isEmailFound(signupRequest.getEmail()))
             return new ResponseEntity<>("Ошибка: такой эмеил уже есть", HttpStatus.BAD_REQUEST);
-        userService.CreateNewUser(signupRequest);
+        userService.createNewUser(signupRequest);
         return new ResponseEntity<>(signupRequest, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/lol",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> lol(){
-        List<String> list = new ArrayList<>();
-        list.add("lol");
-        list.add("lfl");
-        list.add("kik");
-        Map<Integer,List<String>> map = new HashMap<>();
-        map.put(1,new ArrayList<>(list));
-        map.put(2,new ArrayList<>(list));
-        map.put(3,new ArrayList<>(list));
-        map.put(4,new ArrayList<>(list));
-        return new ResponseEntity<>(map,HttpStatus.OK);
-    }
 }

@@ -1,9 +1,9 @@
 package com.example.restfirst.controllerRest;
 
 import com.example.restfirst.dto.ClientForUpdateDto;
-import com.example.restfirst.model.Client;
 import com.example.restfirst.model.JSONViews.Views;
-import com.example.restfirst.service.ClientsService;
+import com.example.restfirst.model.Student;
+import com.example.restfirst.service.StudentService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -16,66 +16,62 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/v1/clients")
-public class ClientController {
-    private final ClientsService clientsService;
+@RequestMapping("/api/v1/students")
+public class StudentController {
+    private final StudentService studentService;
 
     @Autowired
-    public ClientController(ClientsService clientsService) {
-        this.clientsService = clientsService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> getClient(@PathVariable("id") Long clientId) {
-        if (clientId == null) {
+    public ResponseEntity<Student> getStudent(@PathVariable("id") Long studentId) {
+        if (studentId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Client client = clientsService.getById(clientId).orElse(null);
-        if (client == null) {
+        Student student = studentService.getById(studentId).orElse(null);
+        if (student == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(client, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveClient(@RequestBody @Valid Client client, BindingResult bindingResult) {
-        System.out.println(client);
+    public ResponseEntity<?> saveClient(@RequestBody @Valid Student student, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<FieldError> errors =bindingResult.getFieldErrors();
             return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
         }
-        if (client == null)
+        if (student == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        clientsService.saveClient(client);
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateClient(@PathVariable("id") Long id, @RequestBody ClientForUpdateDto clientForUpdateDto, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody ClientForUpdateDto clientForUpdateDto, UriComponentsBuilder uriComponentsBuilder) {
         HttpHeaders httpHeaders = new HttpHeaders();
         if (id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        clientsService.updateClient(id,clientForUpdateDto);
+        studentService.updateStudent(id,clientForUpdateDto);
         return new ResponseEntity<>("updated", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Client> deleteClient(@PathVariable("id") Long id) {
-        Client client = clientsService.getById(id).orElse(null);
-        if (client==null)
+    public ResponseEntity<Student> deleteStudent(@PathVariable("id") Long id) {
+        Student student = studentService.getById(id).orElse(null);
+        if (student==null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        clientsService.deleteClient(client);
+        studentService.deleteStudent(student);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @JsonView({Views.IdName.class})
-    public ResponseEntity<List<Client>> getAllClients() {
-        System.out.println("dkifkgigki");
-        List<Client> list = clientsService.getAllClients();
-        if (list.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(list, HttpStatus.OK);
+    public ResponseEntity<List<Student>> getAllStudents() {
+        List<Student> studentList = studentService.getAllStudents();
+        return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
 
 

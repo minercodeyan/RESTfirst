@@ -20,6 +20,8 @@ repositories {
 
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.6.4'
+// https://mvnrepository.com/artifact/org.springframework/spring-websocket
+    implementation group: 'org.springframework', name: 'spring-websocket', version: '5.3.18'
 
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
 
