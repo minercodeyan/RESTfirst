@@ -2,6 +2,7 @@ package com.example.restfirst.model;
 
 import com.example.restfirst.model.JSONViews.Views;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
@@ -42,6 +43,9 @@ public class Student {
     @NotEmpty
     private String patronymic;
 
+    @Column(name="sex")
+    private String sex;
+
     @Column(name = "date_of_birth")
     @DateTimeFormat(style = "SS")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -50,5 +54,6 @@ public class Student {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
+    @JsonIgnore
     private GroupUni groupUni;
 }

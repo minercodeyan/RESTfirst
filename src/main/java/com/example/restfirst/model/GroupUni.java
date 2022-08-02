@@ -1,9 +1,9 @@
 package com.example.restfirst.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,4 +19,7 @@ public class GroupUni {
 
     @Column(name = "group_number")
     private int groupNumber;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "groupUni")
+    private Set<Student> studentSet;
 }
