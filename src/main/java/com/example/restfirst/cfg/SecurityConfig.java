@@ -5,6 +5,7 @@ import com.example.restfirst.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -66,7 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/v1/**").permitAll().anyRequest().authenticated()
+            .antMatchers("/api/v1/**","/","/gs-guide-websocket/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/test").permitAll().
+            anyRequest().authenticated()
             .and().csrf().disable();
     httpSecurity.addFilterBefore(new CorsFilter(corsConfigurationSource(origins)),
             AbstractPreAuthenticatedProcessingFilter.class);

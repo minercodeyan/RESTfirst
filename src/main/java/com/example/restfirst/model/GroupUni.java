@@ -20,6 +20,10 @@ public class GroupUni {
     @Column(name = "group_number")
     private int groupNumber;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "groupUni")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "groupUni",cascade = CascadeType.ALL)
     private Set<Student> studentSet;
+
+    public GroupUni(Long id) {
+        this.id = id;
+    }
 }

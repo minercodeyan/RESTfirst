@@ -1,5 +1,6 @@
 package com.example.restfirst.controllerRest;
 
+import com.example.restfirst.dto.GroupStudentsDto;
 import com.example.restfirst.model.GroupUni;
 import com.example.restfirst.model.User;
 import com.example.restfirst.security.SecurityUser;
@@ -27,10 +28,14 @@ public class GroupController {
     }
 
     @GetMapping(value = "{number}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GroupUni> getUserGroup(@AuthenticationPrincipal SecurityUser user, @PathVariable int number) {
+    public ResponseEntity<GroupStudentsDto> getUserGroup(@AuthenticationPrincipal SecurityUser user, @PathVariable int number) {
         if(user!=null){
-            GroupUni groupUni = groupService.getUserGroup(number);
-            return new ResponseEntity<>(groupUni, HttpStatus.OK);
+            try {
+                GroupStudentsDto groupUni = groupService.getUserGroup(number);
+                return new ResponseEntity<>(groupUni, HttpStatus.OK);
+            }catch (Exception e){
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }
         else{
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

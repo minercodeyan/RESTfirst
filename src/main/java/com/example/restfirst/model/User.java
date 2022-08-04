@@ -1,10 +1,12 @@
 package com.example.restfirst.model;
 
+import com.example.restfirst.model.communicationentities.Massage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,6 +36,13 @@ public class User {
     @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Massage> massageList;
+
+    public User(Long id) {
+        this.id = id;
+    }
 
     public User(String username, String password, String email) {
         this.username = username;

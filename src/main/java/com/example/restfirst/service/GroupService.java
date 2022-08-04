@@ -1,10 +1,10 @@
 package com.example.restfirst.service;
 
-import com.example.restfirst.model.GroupUni;
+import com.example.restfirst.dto.GroupStudentsDto;
 
 public interface GroupService {
 
     boolean isGroupPresent(Integer number);
 
-    GroupUni getUserGroup(int number);
+    GroupStudentsDto getUserGroup(int number);
 }
