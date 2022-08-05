@@ -15,13 +15,17 @@ import java.util.Set;
 @Setter
 public class GroupStudentsDto {
 
+    @JsonProperty(value = "id")
+    private Long id;
+
     @JsonProperty(value = "number")
     private Integer number;
 
     @JsonProperty(value = "groupMembers")
     private Set<GroupMemberDto> memberSet;
 
-    public GroupStudentsDto(Integer number, Set<Student> memberSet) {
+    public GroupStudentsDto(Long id,Integer number, Set<Student> memberSet) {
+        this.id = id;
         this.number = number;
         this.memberSet=new HashSet<>();
         for (Student member: memberSet) {

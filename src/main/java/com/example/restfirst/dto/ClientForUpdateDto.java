@@ -13,4 +13,6 @@ public class ClientForUpdateDto {
 
     @JsonProperty(value = "surname")
     private String surname;
+
+
 }

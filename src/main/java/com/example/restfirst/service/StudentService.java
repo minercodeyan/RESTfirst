@@ -1,6 +1,7 @@
 package com.example.restfirst.service;
 
 import com.example.restfirst.dto.ClientForUpdateDto;
+import com.example.restfirst.dto.StudentDto;
 import com.example.restfirst.model.Student;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface StudentService {
 
     List<Student> getAllStudents();
 
-    List<Student> getStudentsByNameContains(String key);
+    void saveStudentsGroup(List<StudentDto> studentsForUpdate);
 
 
 }

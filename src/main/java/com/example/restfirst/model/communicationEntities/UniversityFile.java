@@ -1,4 +1,4 @@
-package com.example.restfirst.model.communicationentities;
+package com.example.restfirst.model.communicationEntities;
 
 import lombok.Getter;
 import lombok.Setter;

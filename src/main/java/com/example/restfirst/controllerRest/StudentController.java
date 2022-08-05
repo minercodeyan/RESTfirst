@@ -1,6 +1,7 @@
 package com.example.restfirst.controllerRest;
 
 import com.example.restfirst.dto.ClientForUpdateDto;
+import com.example.restfirst.dto.StudentDto;
 import com.example.restfirst.model.JSONViews.Views;
 import com.example.restfirst.model.Student;
 import com.example.restfirst.model.User;
@@ -9,7 +10,6 @@ import com.example.restfirst.service.StudentService;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +54,6 @@ public class StudentController {
 
     @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody ClientForUpdateDto clientForUpdateDto, UriComponentsBuilder uriComponentsBuilder) {
-        HttpHeaders httpHeaders = new HttpHeaders();
         if (id == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         studentService.updateStudent(id,clientForUpdateDto);
@@ -77,6 +76,14 @@ public class StudentController {
         return new ResponseEntity<>(studentList, HttpStatus.OK);
     }
 
+    @PostMapping(value = "group",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Student>> saveUserGroup(@RequestBody List<StudentDto> studentsForUpdate){
+        if (studentsForUpdate == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        studentService.saveStudentsGroup(studentsForUpdate);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 
 }

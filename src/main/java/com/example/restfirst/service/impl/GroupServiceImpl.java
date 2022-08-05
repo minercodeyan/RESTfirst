@@ -26,7 +26,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupStudentsDto getUserGroup(int number) {
         GroupUni gr = groupRepo.findByGroupNumber(number).orElseThrow();
-        return new GroupStudentsDto(gr.getGroupNumber(),gr.getStudentSet());
+        return new GroupStudentsDto(gr.getId(),gr.getGroupNumber(),gr.getStudentSet());
     }
 
 

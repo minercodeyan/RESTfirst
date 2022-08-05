@@ -4,4 +4,5 @@ public class Views {
 
 public interface IdName{}
 
+public interface MessageUser{}
 }

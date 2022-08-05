@@ -28,18 +28,13 @@ public class GroupController {
     }
 
     @GetMapping(value = "{number}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GroupStudentsDto> getUserGroup(@AuthenticationPrincipal SecurityUser user, @PathVariable int number) {
-        if(user!=null){
+    public ResponseEntity<GroupStudentsDto> getUserGroup(@PathVariable int number) {
             try {
                 GroupStudentsDto groupUni = groupService.getUserGroup(number);
                 return new ResponseEntity<>(groupUni, HttpStatus.OK);
             }catch (Exception e){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
     }
 
 

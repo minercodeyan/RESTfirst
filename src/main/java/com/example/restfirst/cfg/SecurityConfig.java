@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private final UserDetailsService userDetailsService;
   private final AuthEntryPointJwt unauthorizedHandler;
   private final List<String> origins = List.of("http://192.168.0.8:8000","http://localhost:8000");
+  private final String apiPath = "/api/v1/";
 
   @Autowired
   public SecurityConfig(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService, AuthEntryPointJwt unauthorizedHandler){
@@ -67,9 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/v1/**","/","/gs-guide-websocket/**").permitAll()
-            .antMatchers(HttpMethod.GET,"/test").permitAll().
-            anyRequest().authenticated()
+            .antMatchers(apiPath,"/gs-guide-websocket/**",apiPath+"auth/*").permitAll()
+            .antMatchers(HttpMethod.GET,apiPath+"students/**").permitAll()
+            .antMatchers(HttpMethod.GET,apiPath+"profile/**", apiPath+"group/*",apiPath+"timetable/*").hasRole("USER")
+            .anyRequest().authenticated()
             .and().csrf().disable();
     httpSecurity.addFilterBefore(new CorsFilter(corsConfigurationSource(origins)),
             AbstractPreAuthenticatedProcessingFilter.class);

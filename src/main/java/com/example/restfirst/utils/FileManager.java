@@ -1,6 +1,6 @@
 package com.example.restfirst.utils;
 
-import com.example.restfirst.model.communicationentities.UniversityFile;
+import com.example.restfirst.model.communicationEntities.UniversityFile;
 import com.example.restfirst.repo.FileRepo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
