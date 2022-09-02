@@ -55,7 +55,6 @@ public class ProfileController {
 
     @MessageMapping("/changeMessage")
     @SendTo("/topic/activity")
-    @JsonView({Views.MessageUser.class})
     public Message change(MessageDto massageRequest){
         return messageService.saveMsg(massageRequest);
   }

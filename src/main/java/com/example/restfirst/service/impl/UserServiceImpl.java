@@ -1,5 +1,6 @@
 package com.example.restfirst.service.impl;
 
+import com.example.restfirst.exceptions.RegistrationException;
 import com.example.restfirst.model.ERole;
 import com.example.restfirst.model.GroupUni;
 import com.example.restfirst.model.Role;
@@ -15,6 +16,8 @@ import com.example.restfirst.security.jwt.JwtUtils;
 import com.example.restfirst.service.UserService;
 import org.apache.catalina.Group;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,10 +51,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createNewUser(SignupRequest signupRequest) {
+
+        if (userRepo.findByUsername(signupRequest.getUsername()).isPresent())
+        { throw new RegistrationException("Ошибка: такой логин "); }
+        if (userRepo.findByEmail(signupRequest.getEmail()).isPresent())
+        {    throw new RegistrationException("Ошибка: такой емеил ");}
+
         User user = new User(signupRequest.getUsername(),passwordEncoder.encode(signupRequest.getPassword()),
                 signupRequest.getEmail());
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
+
         if (strRoles == null) {
             Role userRole = roleRepo.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));

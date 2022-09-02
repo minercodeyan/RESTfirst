@@ -1,15 +1,11 @@
 package com.example.restfirst.controllerRest;
 
 import com.example.restfirst.dto.GroupStudentsDto;
-import com.example.restfirst.model.GroupUni;
-import com.example.restfirst.model.User;
-import com.example.restfirst.security.SecurityUser;
 import com.example.restfirst.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -29,10 +29,6 @@ public class AuthenticationController {
 
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> regUser(@RequestBody @Valid SignupRequest signupRequest) {
-        if (userService.isUsernameFound(signupRequest.getUsername()))
-            return new ResponseEntity<>("Ошибка: такой логин уже есть", HttpStatus.BAD_REQUEST);
-        if (userService.isEmailFound(signupRequest.getEmail()))
-            return new ResponseEntity<>("Ошибка: такой эмеил уже есть", HttpStatus.BAD_REQUEST);
         userService.createNewUser(signupRequest);
         return new ResponseEntity<>(signupRequest, HttpStatus.CREATED);
     }

@@ -18,6 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "massages")
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -41,7 +42,5 @@ public class Message {
     @JsonProperty(value = "localDate")
     @JsonView({Views.MessageUser.class})
     private Date date;
-
-
 
 }

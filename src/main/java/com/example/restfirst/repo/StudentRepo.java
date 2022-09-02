@@ -8,4 +8,6 @@ import java.util.List;
 public interface StudentRepo extends JpaRepository<Student,Long> {
 
     List<Student> findByNameContains(String name);
+
+    void deleteById(Long id);
 }

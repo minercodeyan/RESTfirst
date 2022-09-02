@@ -13,8 +13,10 @@ public class GroupMemberDto {
 
     @JsonProperty(value = "id")
     private Long id;
+
     @JsonProperty(value = "firstName")
     private String firstName;
+
     @JsonProperty(value = "lastName")
     private String lastName;
 }
