@@ -29,13 +29,12 @@ public class StudentController {
 
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Student> getStudent(@PathVariable("id") Long studentId) {
-        return new ResponseEntity<>(studentService.getById(studentId).orElseThrow(() -> new NotFoundException("student")), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getById(studentId), HttpStatus.OK);
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> saveClient(@RequestBody @Valid Student student) {
-        studentService.saveStudent(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
+        return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +45,7 @@ public class StudentController {
 
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Student> deleteStudent(@PathVariable("id") Long id) {
-        Student student = studentService.getById(id).orElseThrow(() -> new NotFoundException("student"));
+        Student student = studentService.getById(id);
         studentService.deleteStudent(student);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -58,10 +57,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "group",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Student>> saveUserGroup(@RequestBody List<StudentDto> studentsForUpdate){
-        if (studentsForUpdate == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<List<Student>> saveStudentsGroup(@RequestBody List<StudentDto> studentsForUpdate){
         studentService.saveStudentsGroup(studentsForUpdate);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

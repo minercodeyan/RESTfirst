@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers(apiPath,"/gs-guide-websocket/**",apiPath+"auth/*").permitAll()
-            .antMatchers(HttpMethod.GET,apiPath+"students/**").permitAll()
+            .antMatchers(HttpMethod.GET,apiPath+"students/**",apiPath+"test").permitAll()
             .antMatchers(HttpMethod.GET,apiPath+"profile/**", apiPath+"group/*",apiPath+"timetable/*").hasRole("USER")
             .anyRequest().authenticated()
             .and().csrf().disable();

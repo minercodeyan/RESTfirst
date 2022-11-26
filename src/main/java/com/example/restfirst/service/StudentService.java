@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface StudentService {
 
-    Optional<Student> getById(Long id);
+    Student getById(Long id);
 
-    void saveStudent(Student student);
+    Student saveStudent(Student student);
 
     void deleteStudent(Student student);
 

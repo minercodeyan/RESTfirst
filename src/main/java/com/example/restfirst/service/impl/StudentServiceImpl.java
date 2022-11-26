@@ -2,6 +2,7 @@ package com.example.restfirst.service.impl;
 
 import com.example.restfirst.dto.ClientForUpdateDto;
 import com.example.restfirst.dto.StudentDto;
+import com.example.restfirst.exceptions.NotFoundException;
 import com.example.restfirst.model.GroupUni;
 import com.example.restfirst.model.Student;
 import com.example.restfirst.repo.StudentRepo;
@@ -24,13 +25,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Optional<Student> getById(Long id) {
-        return studentRepo.findById(id);
+    public Student getById(Long id) {
+        return studentRepo.findById(id).orElseThrow(() -> new NotFoundException("student"));
     }
 
     @Override
-    public void saveStudent(Student student) {
-        studentRepo.save(student);
+    public Student saveStudent(Student student) {
+       return studentRepo.save(student);
     }
 
     @Override

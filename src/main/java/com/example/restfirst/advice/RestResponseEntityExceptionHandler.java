@@ -3,20 +3,19 @@ package com.example.restfirst.advice;
 
 import com.example.restfirst.exceptions.NotFoundException;
 import com.example.restfirst.exceptions.RegistrationException;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -31,10 +30,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     public ResponseEntity<String> handleRegistrationException(RegistrationException e) {
         HttpHeaders h = new HttpHeaders();
         h.add("Content-type", "text/html;charset=UTF-8");
+
         return new ResponseEntity<>(e.getMessage(),h, HttpStatus.BAD_REQUEST);
     }
 
-
+    @ExceptionHandler(MailException.class)
+    public ResponseEntity<String> handleEmailException(MailException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
     @Override

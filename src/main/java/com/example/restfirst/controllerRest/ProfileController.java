@@ -39,18 +39,12 @@ public class ProfileController {
     }
 
     @PostMapping(value="/email", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> sendMail(@RequestBody EmailDto emailDto) {
-        try {
+    public ResponseEntity<?> sendMail(@RequestBody EmailDto emailDto) throws MailException{
             emailSenderService.sendEmailForUniversity(
                     emailDto.getToEmail(),
                     emailDto.getBody(),
                     emailDto.getSubject());
             return new ResponseEntity<>(emailDto.getToEmail()+"SUCCESS", HttpStatus.OK);
-        }
-        catch (MailException mEx){
-            mEx.printStackTrace();
-            return new ResponseEntity<>(mEx.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @MessageMapping("/changeMessage")

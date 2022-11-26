@@ -2,22 +2,17 @@ package com.example.restfirst.service.impl;
 
 import com.example.restfirst.exceptions.RegistrationException;
 import com.example.restfirst.model.ERole;
-import com.example.restfirst.model.GroupUni;
 import com.example.restfirst.model.Role;
 import com.example.restfirst.model.User;
 import com.example.restfirst.payload.JwtResponse;
 import com.example.restfirst.payload.LoginRequest;
 import com.example.restfirst.payload.SignupRequest;
-import com.example.restfirst.repo.GroupRepo;
 import com.example.restfirst.repo.RoleRepo;
 import com.example.restfirst.repo.UserRepo;
 import com.example.restfirst.security.SecurityUser;
 import com.example.restfirst.security.jwt.JwtUtils;
 import com.example.restfirst.service.UserService;
-import org.apache.catalina.Group;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -106,6 +101,8 @@ public class UserServiceImpl implements UserService {
                 securityUser.getEmail(),roles,
                 user.get().getStudent() != null ? user.get().getStudent().getGroupUni().getGroupNumber() : 0);
     }
+
+
 
     @Override
     public Boolean isUsernameFound(String username) {
