@@ -102,8 +102,6 @@ public class UserServiceImpl implements UserService {
                 user.get().getStudent() != null ? user.get().getStudent().getGroupUni().getGroupNumber() : 0);
     }
 
-
-
     @Override
     public Boolean isUsernameFound(String username) {
         return userRepo.findByUsername(username).isPresent();
@@ -113,6 +111,5 @@ public class UserServiceImpl implements UserService {
     public Boolean isEmailFound(String email) {
         return userRepo.findByEmail(email).isPresent();
     }
-
 
 }

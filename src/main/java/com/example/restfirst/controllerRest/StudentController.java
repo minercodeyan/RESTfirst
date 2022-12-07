@@ -61,7 +61,5 @@ public class StudentController {
         studentService.saveStudentsGroup(studentsForUpdate);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-
 }
 

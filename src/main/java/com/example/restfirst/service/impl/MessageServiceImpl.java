@@ -22,7 +22,6 @@ public class MessageServiceImpl implements MessageService {
         this.messageRepo = messageRepo;
     }
 
-
     @Override
     public Message saveMsg(MessageDto messageRequest) {
         Message massageResp = new Message();

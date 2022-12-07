@@ -29,6 +29,4 @@ public class GroupController {
         return new ResponseEntity<>(groupUni, HttpStatus.OK);
     }
 
-
-
 }

@@ -19,7 +19,6 @@ public class GroupServiceImpl implements GroupService {
         this.groupRepo = groupRepo;
     }
 
-
     @Override
     public GroupStudentsDto getUserGroup(int number) {
         GroupUni gr = groupRepo.findByGroupNumber(number).orElseThrow(() -> new NotFoundException("group"));
